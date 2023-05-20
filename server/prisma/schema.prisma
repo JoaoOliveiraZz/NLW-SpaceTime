@@ -10,6 +10,21 @@ datasource db {
 // UUID -> Universal Unique Id (vai gerar automaticamente para cada registro um id unico universal)
 
 model User {
-  id   String @id @default(uuid())
-  name String
+  id        String   @id @default(uuid())
+  githubId  Int      @unique
+  name      String
+  login     String
+  avatarUrl String
+  memories  memory[]
+}
+
+model memory {
+  id        String   @id @default(uuid())
+  userId    String
+  coverUrl  String
+  content   String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
